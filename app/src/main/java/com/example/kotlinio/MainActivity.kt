@@ -163,7 +163,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama,textTlp, textAlamat,dataForm.sex)
+            cobaViewModel.insertData(textNama,textTlp, textAlamat,dataForm.sex,)
         }
     ) {
         Text(
