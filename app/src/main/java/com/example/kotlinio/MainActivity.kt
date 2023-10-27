@@ -97,9 +97,14 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember { mutableStateOf("")}
     var textTlp by remember { mutableStateOf("")}
     var textAlamat by remember { mutableStateOf("")}
+    var textStatus by remember { mutableStateOf("") }
+    var textEmail by remember { mutableStateOf("") }
+
+
 
     val context = LocalContext.current
     val dataForm: DataForm
+
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
 
@@ -135,6 +140,23 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             textAlamat = it
         }
     )
+    OutlinedTextField(value = textEmail,
+           singleLine = true,
+           shape = MaterialTheme.shapes.large,
+           modifier = Modifier.fillMaxWidth(),
+           label = { Text(text = "Email") },
+           onValueChange = { textEmail = it
+           }
+    )
+    OutlinedTextField(value = textStatus,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email") },
+        onValueChange = { textStatus = it
+        }
+    )
+
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
@@ -145,7 +167,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     ) {
         Text(
-            text = stringResource(R.string.submit),
+            text = stringResource(R.string.register),
             fontSize = 16.sp
         )
     }
@@ -154,12 +176,14 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         namanya = cobaViewModel.namaUsr,
         teleponnya = cobaViewModel.noTlp,
         alamatnya = cobaViewModel.alamatRmh,
-        jenisnya = cobaViewModel.jenisKl
+        jenisnya = cobaViewModel.jenisKl,
+        statusnya = cobaViewModel.status,
+        emailnya = cobaViewModel.email
     )
 }
 
 @Composable
-fun TextHasil(namanya: String, teleponnya: String, alamatnya: String, jenisnya: String,){
+fun TextHasil(namanya: String, teleponnya: String, alamatnya: String, jenisnya: String, statusnya: String, emailnya: String,){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -184,6 +208,13 @@ fun TextHasil(namanya: String, teleponnya: String, alamatnya: String, jenisnya: 
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
+        Text(text ="Status : "  + statusnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(text = "Email  " + emailnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 4.dp))
     }
 }
 
@@ -216,6 +247,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     KotlinioTheme {
-        Greeting("Android")
+        TampilLayout()
     }
 }
